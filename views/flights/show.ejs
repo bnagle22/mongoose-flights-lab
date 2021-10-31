@@ -1,0 +1,20 @@
+
+
+<main>
+  <h1>Flight</h1>
+  <section>
+    <div>Flight: </div>
+    <div>
+      <%= flight.flightNo %>
+      <a href="/flights/<%=_flight._id %>/edit">Edit Flight</a>
+    </div>
+    <div>Airline:</div>
+    <div><%= flight.airline %></div>
+    <div>Airport:</div>
+    <div><%= flight.airport %></div>
+    <div>Flight number:</div>
+    <div><%= flight.flightNo %></div>
+    <div>Departure:</div>
+    <div><%= flight.departs %></div>
+  </section>
+</main>
