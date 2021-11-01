@@ -8,6 +8,8 @@ function newFlight(req, res) {
 
 function create(req, res) {
   const flight = new Flight(req.body)
+  console.log(req.body)
+  console.log(flight)
   flight.save(function(err) {
     if (err) {
       return res.redirect('/flights/new')
@@ -18,6 +20,7 @@ function create(req, res) {
 
 function index(req, res) {
   Flight.find({}, function(error, flights) {
+    console.log("list of flights", flights)
     res.render("flights/index", {
       flights,
       error,
