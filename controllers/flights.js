@@ -59,14 +59,23 @@ function update(req, res) {
   })
 }
 
-function addToTickets(req, res) {
-  Flight.findById(req.body.id, function(err, flight) {
-    flight.tickets.push(req.body.ticketId)
-    ticket.save(function(err){
+function createTicket(req, res) {
+  Flight.findById(req.params.id, function(error, flight) {
+    flight.tickets.push(req.body)
+    flight.save(function(err) {
       res.redirect(`/flights/${flight._id}`)
     })
   })
 }
+
+// function addToTickets(req, res) {
+//   Flight.findById(req.body.id, function(err, flight) {
+//     flight.tickets.push(req.body.ticketId)
+//     ticket.save(function(err){
+//       res.redirect(`/flights/${flight._id}`)
+//     })
+//   })
+// }
 
 export {
   newFlight as new,
@@ -76,5 +85,6 @@ export {
   deleteFlight as delete,
   edit,
   update,
-  addToTickets
+  createTicket
+  // addToTickets
 }
