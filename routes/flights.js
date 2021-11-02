@@ -7,6 +7,8 @@ import * as flightsCtrl from '../controllers/flights.js'
 //   res.send('respond with a resource')
 // })
 
+
+ // GET
 router.get("/", flightsCtrl.index)
 
 router.get('/new', flightsCtrl.new)
@@ -15,7 +17,10 @@ router.get('/:id', flightsCtrl.show)
 
 router.get('/:id/edit', flightsCtrl.edit)
 
+// POST
 router.post('/', flightsCtrl.create)
+
+router.post('/:id', flightsCtrl.create)
 
 router.delete('/:id', flightsCtrl.delete)
 

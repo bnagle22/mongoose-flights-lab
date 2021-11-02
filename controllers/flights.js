@@ -14,7 +14,7 @@ function create(req, res) {
     if (err) {
       return res.redirect('/flights/new')
     }
-    res.redirect('/flights/new')
+    res.redirect(`/flights/${flight._id}`)
   })
 }
 
@@ -53,11 +53,28 @@ function edit(req, res) {
   })
 }
 
+function update(req, res) {
+  Flight.findByIdAndUpdate(req.params.id, req.body, function(err, flight) {
+    res.redirect(`flights/${flight._id}`)
+  })
+}
+
+function addToTickets(req, res) {
+  Flight.findById(req.body.id, function(err, flight) {
+    flight.tickets.push(req.body.ticketId)
+    ticket.save(function(err){
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
+
 export {
   newFlight as new,
   create,
   index,
   show,
   deleteFlight as delete,
-  edit
+  edit,
+  update,
+  addToTickets
 }
