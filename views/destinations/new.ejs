@@ -9,13 +9,13 @@
   <p>Please first ensure that the Destination is not in the dropdown
     <select>
       <% destinations.forEach(function(destination) { %>
-        <option><%= destination.name %></option>
+        <option><%= destination.airport %></option>
       <% }) %>
     </select>
   </p>
   <form id="add-destination-form" action="/destinations" method="POST">
-    <label for="name-input">Destination:</label>
-    <input type="text" name="name" id="name-input" required>
+    <label for="airport-input">Destination:</label>
+    <input type="text" name="airport" id="airport-input" required>
     <button type="submit">Add Destination</button>
   </form>
 </main>

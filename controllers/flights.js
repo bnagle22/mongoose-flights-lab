@@ -1,4 +1,5 @@
 import { Flight } from "../models/flight.js"
+import { Destination } from "../models/destination.js"
 
 function newFlight(req, res) {
   res.render("flights/new", {
@@ -30,12 +31,25 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  Flight.findById(req.params.id, function(err, flight) {
-    res.render("flights/show", {
-      title: ` Flight ${flight.flightNo} Details`,
-      flight
+  Flight.findById(req.params.id)
+  .populate("destinations")
+  .exec(function(err, flight){
+    Destination.find({_id: {$nin: flight.destinations}}, function(err, destinations){
+      console.log(destinations)
+      res.render("flights/show", {
+        title: ` Flight ${flight.flightNo} Details`,
+      flight,
+      destinations
+      })
     })
   })
+  // Flight.findById(req.params.id, function(err, flight) {
+  //   res.render("flights/show", {
+  //     title: ` Flight ${flight.flightNo} Details`,
+  //     flight,
+  //     Destination
+  //   })
+  // })
 }
 
 function deleteFlight(req, res) {
@@ -63,19 +77,20 @@ function createTicket(req, res) {
   Flight.findById(req.params.id, function(error, flight) {
     flight.tickets.push(req.body)
     flight.save(function(err) {
-      res.redirect(`/flights/${flight._id}`)
+      res.redirect(`/flights/${flight._id}/`)
     })
   })
 }
 
-// function addToTickets(req, res) {
-//   Flight.findById(req.body.id, function(err, flight) {
-//     flight.tickets.push(req.body.ticketId)
-//     ticket.save(function(err){
-//       res.redirect(`/flights/${flight._id}`)
-//     })
-//   })
-// }
+function addToDestinations(req, res) {
+  console.log(req.body)
+  Flight.findById(req.params.id, function(err, flight) {
+    flight.destinations.push(req.body.destinationId)
+    flight.save(function(err){
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
 
 export {
   newFlight as new,
@@ -85,6 +100,6 @@ export {
   deleteFlight as delete,
   edit,
   update,
-  createTicket
-  // addToTickets
+  createTicket,
+  addToDestinations
 }
